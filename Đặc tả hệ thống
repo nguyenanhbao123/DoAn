@@ -1,5 +1,4 @@
 LuxDaShop - Website Bán Đồ da cao cấp
-Goroco Shop Banner
 
 LuxDaShop là website thương mại điện tử chuyên cung cấp các sản phẩm đồ da cao cấp , đảm bảo an toàn cho sức khỏe người tiêu dùng.
 
@@ -11,8 +10,8 @@ Xem sản phẩm, đọc blog
 Thêm sản phẩm vào giỏ hàng
 Thanh toán, tạo đơn hàng
 Quản lý thông tin cá nhân
-Quản trị viên (Admin):
 
+Quản trị viên (Admin):
 Quản lý sản phẩm (thêm/sửa/xóa)
 Quản lý người dùng
 Quản lý đơn hàng
@@ -46,24 +45,22 @@ Thông tin địa chỉ, số điện thoại
 Bản đồ chỉ dẫn
 7. Admin Dashboard
 Quản lý sản phẩm:
-
 Thêm/sửa/xóa sản phẩm
 Quản lý danh mục sản phẩm
 Quản lý kho hàng
-Quản lý đơn hàng:
 
+Quản lý đơn hàng:
 Xem danh sách đơn hàng
 Cập nhật trạng thái đơn hàng
 Hủy đơn hàng
-Quản lý người dùng:
 
+Quản lý người dùng:
 Xem danh sách người dùng
 Khóa/mở tài khoản
-Quản lý nội dung:
 
+Quản lý nội dung:
 Tạo/sửa/xóa bài viết blog
 Quản lý bình luận
-Thống kê:
 
 Công nghệ sử dụng
 Frontend: HTML5, CSS3, JavaScript, Bootstrap 5
