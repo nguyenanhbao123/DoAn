@@ -1,0 +1,75 @@
+﻿@model IEnumerable<DoAn.Models.Product>
+@{
+    ViewData["Title"] = "Cửa Hàng - LUXDASHOP";
+}
+}
+
+<div class="heading">
+    <h1>Cửa Hàng Của Chúng Tôi</h1>
+    <p> <a asp-controller="Home" asp-action="HomeIndex">Trang Chủ >></a> Cửa Hàng </p>
+</div>
+
+<section class="category">
+
+    <h1 class="title"> Danh Mục <span>Sản Phẩm</span> <a href="#">Xem Tất Cả >></a> </h1>
+
+    <div class="box-container">
+
+        <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Vali" class="box">
+            <img src="~/image/vali-icon.jpg" alt="">
+            <h3>Vali </h3>
+        </a>
+
+        <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Ví Da" class="box">
+            <img src="~/image/vi-icon.png" alt="">
+            <h3>Ví Da</h3>
+        </a>
+
+        <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Thắt lưng" class="box">
+            <img src="~/image/nit-icon.jpg" alt="">
+            <h3>Thắt lưng </h3>
+        </a>
+
+        <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Cặp Da" class="box">
+            <img src="~/image/cap-iocn.jpg" alt="">
+            <h3>Cặp Da</h3>
+        </a>
+
+    </div>
+
+</section>
+
+<section class="products">
+
+    <h1 class="title"> Sản Phẩm <span>Mới Nhất</span> <a href="#">Xem Tất Cả >></a> </h1>
+
+    <div class="box-container">
+        @foreach (var product in Model)
+        {
+            <div class="box">
+                <div class="icons">
+                    <a asp-controller="Cart"
+                       asp-action="AddToCart"
+                       asp-route-productId="@product.ProductId"
+                       class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                    <a href="/Favorite/AddToFavorite?productId=@product.ProductId" class="favorite-icon">
+                        <i class="fas fa-heart" title="Thêm vào yêu thích"></i>
+                    </a>
+
+                    <a asp-controller="Shop" asp-action="Shopdetail" asp-route-id="@product.ProductId" class="fas fa-eye"></a>
+                </div>
+                <div class="image">
+                    <img src="@product.Image" alt="@product.ProductName" />
+                </div>
+                <div class="content">
+                    <h3>@product.ProductName</h3>
+                    <div class="price">@product.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</div>
+              
+                </div>
+            </div>
+        }
+    </div>
+
+</section>

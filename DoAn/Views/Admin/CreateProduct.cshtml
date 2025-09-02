@@ -1,0 +1,84 @@
+﻿@model DoAn.Models.Product
+@{
+    ViewData["Title"] = "Thêm sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var existingCategories = ViewBag.ExistingCategories as List<string> ?? new List<string>();
+}
+
+<h2>Thêm sản phẩm mới</h2>
+
+<form asp-action="CreateProduct" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="ProductName">Tên sản phẩm</label>
+        <input name="ProductName" class="form-control" placeholder="Nhập tên sản phẩm" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Image">Link hình ảnh</label>
+        <input name="Image" class="form-control" id="image-url" placeholder="Nhập link hình ảnh" />
+    </div>
+
+    <!-- Ảnh xem trước -->
+    <div class="form-group mt-3">
+        <label>Xem trước ảnh:</label><br />
+        <img id="preview-image"
+             src=""
+             style="max-height: 200px; border: 1px solid #ccc; padding: 5px;" />
+    </div>
+    <div class="form-group">
+        <label for="Price">Giá (VNĐ)</label>
+        <input name="Price" class="form-control" placeholder="Nhập giá sản phẩm" />
+    </div>
+
+    <div class="form-group">
+        <label for="Category">Danh mục</label>
+        <input name="Category" class="form-control" list="categoryList" placeholder="Chọn hoặc nhập danh mục" />
+        <datalist id="categoryList">
+            @foreach (var category in ViewBag.ExistingCategories as List<string>)
+            {
+                <option value="@category"></option>
+            }
+        </datalist>
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Mô tả</label>
+        <textarea name="Description" class="form-control" rows="4" placeholder="Nhập mô tả sản phẩm"></textarea>
+    </div>
+
+    <div class="form-group">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="Trending" name="Trending" value="true" />
+            <label class="form-check-label" for="Trending">Sản phẩm nổi bật</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Thêm sản phẩm</button>
+    <a asp-action="ManageProducts" class="btn btn-secondary">Hủy</a>
+</form>
+
+@section Scripts {
+    <script>
+        const imageInput = document.getElementById("image-url");
+        const previewImage = document.getElementById("preview-image");
+
+        function updatePreview() {
+            const url = imageInput.value.trim();
+            if (url) {
+                previewImage.src = url;
+            } else {
+                previewImage.src = "https://via.placeholder.com/200x150?text=Chưa+có+ảnh";
+            }
+        }
+
+        // Cập nhật ảnh mỗi khi nhập link mới
+        imageInput.addEventListener("input", updatePreview);
+
+        // Nếu link ảnh lỗi, hiển thị ảnh mặc định
+        previewImage.onerror = () => {
+            previewImage.src = "https://via.placeholder.com/200x150?text=Ảnh+không+hợp+lệ";
+        };
+    </script>
+}

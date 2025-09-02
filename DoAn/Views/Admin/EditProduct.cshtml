@@ -1,0 +1,81 @@
+﻿@model DoAn.Models.Product
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Chỉnh sửa sản phẩm</h2>
+
+<form asp-action="EditProduct" method="post">
+    <input type="hidden" asp-for="ProductId" />
+
+    <div class="form-group">
+        <label asp-for="ProductName">Tên sản phẩm</label>
+        <input asp-for="ProductName" class="form-control" />
+        <span asp-validation-for="ProductName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Image">Link hình ảnh</label>
+        <input asp-for="Image" class="form-control" id="image-url" />
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+
+    <!-- Ảnh xem trước -->
+    <div class="form-group mt-3">
+        <label>Xem trước ảnh:</label><br />
+        <img id="preview-image"
+             src="@Model?.Image"
+             style="max-height: 200px; border: 1px solid #ccc; padding: 5px;" />
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Price">Giá (VNĐ)</label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Category">Danh mục</label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description">Mô tả</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group form-check">
+        <input asp-for="Trending" class="form-check-input" />
+        <label asp-for="Trending" class="form-check-label">Trending?</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="ManageProducts" class="btn btn-secondary">Quay lại</a>
+</form>
+@section Scripts {
+    <script>
+        const imageInput = document.getElementById("image-url");
+        const previewImage = document.getElementById("preview-image");
+
+        function updatePreview() {
+            const url = imageInput.value.trim();
+            if (url) {
+                previewImage.src = url;
+            } else {
+                previewImage.src = "https://placehold.co/600x400?text=Kh%C3%B4ng%20c%C3%B3%20%E1%BA%A3nh";
+            }
+        }
+
+        // Cập nhật ảnh mỗi khi nhập link mới
+        imageInput.addEventListener("input", updatePreview);
+
+        // Nếu link ảnh lỗi, hiển thị ảnh mặc định
+        previewImage.onerror = () => {
+                    previewImage.src = "httpshttps://via.placeholder.com/200x150?text=%E1%BA%A2nh+kh%C3%B4ng+h%E1%BB%A3p+l%E1%BB%87";
+        };
+    </script>
+}

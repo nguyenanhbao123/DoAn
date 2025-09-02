@@ -1,0 +1,76 @@
+﻿<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Admin Panel</div>
+    </a>
+
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Quản lý
+    </div>
+
+    <!-- Nav Item - Quản lý đơn hàng -->
+    <li class="nav-item">
+        <a class="nav-link" asp-action="ManageOrders">
+            <i class="fas fa-file-invoice"></i>
+            <span>Đơn hàng</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Quản lý sản phẩm -->
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Admin" asp-action="ManageProducts">
+            <i class="fas fa-box-open"></i>
+            <span>Sản phẩm</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Quản lý người dùng -->
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Admin" asp-action="ManageUsers">
+            <i class="fas fa-users"></i>
+            <span>Người dùng</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Quản lý bài viết -->
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Admin" asp-action="ManageBlogs">
+            <i class="fas fa-newspaper"></i>
+            <span>Bài viết</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Quản lý thư viện -->
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Admin" asp-action="ManageGallery">
+            <i class="fas fa-images"></i>
+            <span>Thư viện</span>
+        </a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<script>
+    $(document).ready(function () {
+        // Khi người dùng click vào một item trên sidebar
+        $(".sidebar .nav-item a.nav-link").on("click", function () {
+            // Xóa class 'active' khỏi tất cả nav-item
+            $(".sidebar .nav-item").removeClass("active");
+
+            // Thêm class 'active' cho nav-item hiện tại (thẻ <li>)
+            $(this).closest(".nav-item").addClass("active");
+        });
+    });
+</script>

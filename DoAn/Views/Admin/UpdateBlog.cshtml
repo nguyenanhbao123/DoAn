@@ -1,0 +1,59 @@
+﻿@model DoAn.Models.Blog
+@{
+    Layout = "_AdminLayout";
+    var isEdit = !string.IsNullOrEmpty(Model?.BlogId);
+    ViewData["Title"] = isEdit ? "Chỉnh sửa bài viết" : "Thêm bài viết mới";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="@(isEdit ? "BlogEdit" : "BlogCreate")" method="post">
+    @if (isEdit)
+    {
+        <input type="hidden" name="BlogId" value="@Model.BlogId" />
+    }
+
+    <div class="mb-3">
+        <label class="form-label">Tiêu đề bài viết</label>
+        <input name="Title" class="form-control" value="@Model?.Title" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Nội dung</label>
+        <textarea name="Content" class="form-control" rows="5">@Model?.Content</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Link hình ảnh (URL)</label>
+        <input name="Image" class="form-control" id="image-url" value="@Model?.Image" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Xem trước ảnh</label><br />
+        <img id="preview-image"
+             src="@Model?.Image"
+             alt="Xem trước ảnh"
+             style="max-height: 200px; border: 1px solid #ccc; padding: 5px;" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a asp-action="ManageBlogs" class="btn btn-secondary ms-2">Hủy</a>
+</form>
+
+@section Scripts {
+    <script>
+        const urlInput = document.getElementById('image-url');
+        const previewImage = document.getElementById('preview-image');
+
+        function updatePreview() {
+            const url = urlInput.value.trim();
+            previewImage.src = url || "https://via.placeholder.com/200x150?text=Chưa+có+ảnh";
+        }
+
+        urlInput.addEventListener('input', updatePreview);
+
+        previewImage.onerror = () => {
+            previewImage.src = "https://via.placeholder.com/200x150?text=Ảnh+không+hợp+lệ";
+        };
+    </script>
+}

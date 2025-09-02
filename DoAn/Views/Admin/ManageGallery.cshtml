@@ -1,0 +1,26 @@
+﻿@model List<Gallery>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Thư viện ảnh";
+}
+
+<h2>Thư viện ảnh</h2>
+<a class="btn btn-primary mb-3" asp-action="GalleryCreate">Thêm ảnh mới</a>
+
+<div class="row">
+    @foreach (var img in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card">
+                <img src="@img.Path" class="card-img-top" style="height:200px;object-fit:cover;" />
+                <div class="card-body">
+                    <h5 class="card-title">@img.ImageName</h5>
+                    <form asp-action="GalleryDelete" asp-route-id="@img.GalleryId" method="post" onsubmit="return confirm('Xoá ảnh này?');">
+                        <a asp-action="GalleryEdit" asp-route-id="@img.GalleryId" class="btn btn-warning btn-sm">Sửa</a>
+                        <button class="btn btn-danger btn-sm">Xoá</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

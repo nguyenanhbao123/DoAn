@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DoAn.Models.Gallery>
+@{
+    ViewData["Title"] = "Giới thiệu - LUXDASHOP"; 
+}
+}
+<div class="heading">
+    <h1>Về Chúng Tôi</h1>
+    <p> <a asp-action="HomeIndex" asp-controller="Home">Trang Chủ >></a> Giới Thiệu </p>
+</div>
+
+<section class="about">
+
+    <div class="image">
+        <img src="~/image/about-img.jpg" alt="">
+    </div>
+
+    <div class="content">
+        <span>Chào Mừng Đến Với Cửa Hàng Da Cao Cấp</span>
+        <h3>Vali – Ví Da – Thắt Lưng – Cặp Da</h3>
+        <p>Chúng tôi mang đến những sản phẩm da thật tinh tế, bền bỉ và sang trọng. Với tiêu chí “Phong cách và chất lượng song hành”, cửa hàng luôn đảm bảo sự hài lòng cho khách hàng trong từng sản phẩm.</p>
+        <p>Hãy đồng hành cùng chúng tôi để khẳng định phong cách và sự đẳng cấp của bạn với các sản phẩm da cao cấp, giá cả hợp lý và dịch vụ tận tâm.</p>
+        <a href="#" class="btn">Khám Phá Ngay</a>
+    </div>
+
+</section>
+
+<section class="gallery">
+
+    <h1 class="title"> Bộ Sưu Tập <span>Hình Ảnh</span> <a href="#">Xem Tất Cả >></a> </h1>
+
+    <div class="box-container">
+        @foreach (var image in Model)
+        {
+            <div class="box">
+                <img src="@Url.Content(image.Path)" alt="@image.ImageName" />
+                <div class="icons">
+                    <a href="#" class="fas fa-eye"></a>
+                    <a href="#" class="fas fa-heart"></a>
+                    <a href="#" class="fas fa-share-alt"></a>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>
+

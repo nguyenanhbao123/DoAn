@@ -1,0 +1,133 @@
+﻿@model DoAn.Models.Cart
+
+<div class="container cart-container">
+    @if (Model.CartItems != null && Model.CartItems.Any())
+    {
+        <div id="cart-with-items">
+            <h2 class="cart-title"><i class="fas fa-shopping-basket me-2"></i>Sản Phẩm Trong Giỏ</h2>
+
+            <div class="cart-items">
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="cart-item">
+                        <img src="@item.Product?.Image" alt="@item.Product?.ProductName" class="product-img">
+                        <div class="product-info">
+                            <h3 class="product-title">@item.Product?.ProductName</h3>
+                            <p class="text-muted mb-2">@item.Product?.Description</p>
+                            <div class="d-flex align-items-center">
+                                <span class="product-price">@String.Format("{0:N0}₫", item.Product?.Price ?? 0)</span>
+                                <div class="ms-4 quantity-control">
+                                    <form asp-action="UpdateQuantity" method="post" class="d-flex align-items-center">
+                                        <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                                        <button type="submit" name="quantity" value="@(item.Quantity - 1)" class="quantity-btn minus"><i class="fas fa-minus"></i></button>
+                                        <input type="text" class="quantity-input" value="@item.Quantity" readonly />
+                                        <button type="submit" name="quantity" value="@(item.Quantity + 1)" class="quantity-btn plus"><i class="fas fa-plus"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <form asp-action="RemoveItem" method="post">
+                            <input type="hidden" name="cartItemId" value="@item.CartItemId" />
+                            <button type="submit" class="remove-btn"><i class="fas fa-trash me-2"></i>Xóa</button>
+                        </form>
+                    </div>
+                }
+            </div>
+
+            <!-- Tóm tắt đơn hàng -->
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="summary-card">
+                        <h3 class="summary-title">Tóm Tắt Đơn Hàng</h3>
+                        @{
+                            var subtotal = Model.CartItems.Sum(ci => (ci.Product?.Price ?? 0) * (ci.Quantity ?? 0));
+                            var discount = subtotal * 0.10; // Giảm giá 10%
+                            var shipping = subtotal * 0.07; // Phí vận chuyển 7%
+                            var total = subtotal - discount + shipping;
+                        }
+                        <div class="summary-item">
+                            <span>Tạm tính:</span>
+                            <span>@String.Format("{0:N0}₫", subtotal)</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Giảm giá:</span>
+                            <span class="text-danger">@String.Format("-{0:N0}₫", discount)</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Phí vận chuyển:</span>
+                            <span>@String.Format("{0:N0}₫", shipping)</span>
+                        </div>
+                        <div class="summary-item mt-4 pt-3 border-top">
+                            <span><strong>Tổng cộng:</strong></span>
+                            <span class="total-price">@String.Format("{0:N0}₫", total)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Form thông tin người nhận -->
+            <form asp-action="Checkout" method="post" class="shipping-form">
+                @Html.AntiForgeryToken()
+                <h3 class="form-title"><i class="fas fa-truck me-2"></i>Thông Tin Người Nhận</h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Họ và tên</label>
+                        <input type="text" name="FullName" class="form-control" placeholder="Nguyễn Văn A" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Số điện thoại</label>
+                        <input type="tel" name="Phone" class="form-control" placeholder="0912 345 678" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Địa chỉ nhận hàng</label>
+                        <input type="text" name="Address" class="form-control" placeholder="Số nhà, đường" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" style="font-size:1.8rem">Tỉnh/Thành phố</label>
+                        <select id="province" name="Province" class="form-select" style="font-size:1.5rem" required>
+                            <input type="hidden" name="ProvinceName" id="ProvinceName" />
+                            <option selected disabled></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" style="font-size:1.8rem">Quận/Huyện</label>
+                        <select id="district" name="District" class="form-select" style="font-size:1.5rem" required>
+                            <input type="hidden" name="DistrictName" id="DistrictName" />
+                            <option selected disabled></option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label" style="font-size:1.8rem">Phường/Xã</label>
+                        <select id="ward" name="Ward" class="form-select" style="font-size:1.5rem" required>
+                            <input type="hidden" name="WardName" id="WardName" />
+                            <option selected disabled></option>
+                        </select>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Ghi chú</label>
+                        <textarea name="Note" class="form-control" rows="3" placeholder="Ghi chú thêm về đơn hàng..."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="checkout-btn">
+                    <i class="fas fa-credit-card me-2"></i>THANH TOÁN
+                </button>
+            </form>
+
+        </div>
+    }
+    else
+    {
+        <!-- Giỏ hàng trống -->
+        <div id="empty-cart" class="empty-cart">
+            <img src="https://www.svgrepo.com/show/17356/empty-cart.svg" alt="Empty cart" />
+            <h1 class="mb-3"><strong>Giỏ hàng của bạn đang trống</strong></h1>
+            <p class="mb-4" style="max-width: 600px; margin: 0 auto;">
+                Trước khi tiến hành thanh toán, bạn cần thêm một số sản phẩm vào giỏ hàng.
+                Bạn sẽ tìm thấy nhiều sản phẩm thú vị trên trang "Cửa Hàng" của chúng tôi.
+            </p>
+            <a href="/Shop" class="btn-shopping">
+                <i class="fas fa-shopping-bag me-2"></i>BẮT ĐẦU MUA SẮM
+            </a>
+        </div>
+    }
+</div>

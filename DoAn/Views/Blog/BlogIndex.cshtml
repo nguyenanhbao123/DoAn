@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DoAn.Models.Blog>
+@{
+    ViewData["Title"] = "Bài Viết - LUXDASHOP";
+}
+}
+<div class="heading">
+    <h1>Bài Viết Của Chúng Tôi</h1>
+    <p> <a asp-controller="Home" asp-action="HomeIndex">Trang Chủ >></a> Bài Viết </p>
+</div>
+
+<section class="blogs">
+
+    <h1 class="title"> Bài <span>Viết</span> <a href="#">Xem Tất Cả >></a> </h1>
+
+    <div class="box-container">
+        @foreach (var blog in Model)
+        {
+            <div class="box">
+                <div class="image">
+                    <img src="@Url.Content(blog.Image)" alt="@blog.Title" />
+                </div>
+                <div class="content">
+                    <div class="icons">
+                        <a href="#"> <i class="fas fa-calendar"></i> @blog.PostedDate?.ToString("dd MMM yyyy") </a>
+                        <a href="#"> <i class="fas fa-user"></i> Bởi Admin </a>
+                    </div>
+                    <h3>@blog.Title</h3>
+                    <p>@(blog.Content?.Length > 100 ? blog.Content.Substring(0, 100) + "..." : blog.Content)</p>
+                    <a href="#" class="btn">Đọc Tiếp <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>

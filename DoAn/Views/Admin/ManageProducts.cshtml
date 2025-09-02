@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DoAn.Models.Product>
+@{
+    ViewData["Title"] = "Quản lý Sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int total = ViewBag.TotalProducts ?? 0;
+}
+
+<h1 class="mb-4">Quản lý sản phẩm</h1>
+<p>Tổng số sản phẩm: <strong>@total</strong></p>
+
+<a asp-action="CreateProduct" class="btn btn-success mb-3">Thêm sản phẩm</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Danh mục</th>
+            <th>Rating</th>
+            <th>Trending</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><img src="@item.Image" width="60" style="object-fit:cover" /></td>
+                <td>@item.ProductName</td>
+                <td>@item.Price.ToString("N0") ₫</td>
+                <td>@item.Category</td>
+                <td>@item.AverageRating?.ToString("0.0")</td>
+                <td>@(item.Trending == true ? "🔥" : "–")</td>
+                <td>
+                    <a asp-action="EditProduct" asp-route-id="@item.ProductId" class="btn btn-primary btn-sm">Sửa</a>
+                    <form asp-action="DeleteProduct" asp-route-id="@item.ProductId" method="post" style="display:inline;" onsubmit="return confirm('Xóa sản phẩm này?');">
+                        <button class="btn btn-danger btn-sm">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

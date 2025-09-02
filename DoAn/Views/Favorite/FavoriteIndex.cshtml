@@ -1,0 +1,103 @@
+﻿@model IEnumerable<DoAn.Models.Product>
+@{
+    ViewData["Title"] = "Danh sách yêu thích - lUXDAsHOP";
+    var ModelFavorites = ViewBag.ModelFavorites as List<string> ?? new List<string>();
+}
+}
+
+<div class="heading">
+    <h1>Cửa Hàng Của Chúng Tôi</h1>
+    <p> <a asp-controller="Home" asp-action="HomeIndex">Trang Chủ >></a> Danh sách yêu thích </p>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <section class="category">
+        <h1 class="title"> Danh Mục <span>Sản Phẩm</span> <a href="#">Xem Tất Cả >></a> </h1>
+
+        <div class="box-container">
+            <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Trái cây" class="box">
+                <img src="~/image/cat-1.png" alt="">
+                <h3>Trái Cây Tươi</h3>
+            </a>
+
+            <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Rau củ" class="box">
+                <img src="~/image/cat-2.png" alt="">
+                <h3>Rau Củ</h3>
+            </a>
+
+            <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Gia vị" class="box">
+                <img src="~/image/cat-3.png" alt="">
+                <h3>Gia Vị Hữu Cơ</h3>
+            </a>
+
+            <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Thịt" class="box">
+                <img src="~/image/cat-4.png" alt="">
+                <h3>Thịt Tươi</h3>
+            </a>
+
+            <a asp-controller="Shop" asp-action="ShopCategory" asp-route-category="Hạt" class="box">
+                <img src="~/image/cat-5.png" alt="">
+                <h3>Ngũ Cốc Hữu Cơ</h3>
+            </a>
+        </div>
+    </section>
+
+    <section class="products">
+        <h1 class="title"> Sản Phẩm <span>Mới Nhất</span> <a href="#">Xem Tất Cả >></a> </h1>
+
+        <div class="box-container">
+            @foreach (var product in Model)
+            {
+                <div class="box">
+                    <div class="icons">
+                        <a asp-controller="Cart"
+                           asp-action="AddToCart"
+                           asp-route-productId="@product.ProductId"
+                           class="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i>
+                        </a>
+                        <a href="#"
+                           class="fas fa-heart favorite-icon @(ModelFavorites.Contains(product.ProductId) ? "favorited" : "")"
+                           data-product-id="@product.ProductId"
+                           data-is-favorited="@(ModelFavorites.Contains(product.ProductId).ToString().ToLower())"
+                           style="color: @(ModelFavorites.Contains(product.ProductId) ? "#e74c3c" : "#666"); cursor: pointer;">
+                        </a>
+                        <a asp-controller="Shop" asp-action="Shopdetail" asp-route-id="@product.ProductId" class="fas fa-eye"></a>
+                    </div>
+                    <div class="image">
+                        <img src="@product.Image" alt="@product.ProductName" />
+                    </div>
+                    <div class="content">
+                        <h3>@product.ProductName</h3>
+                        <div class="price">@product.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</div>
+                        <div class="stars">
+                            @{
+                                int stars = (int)Math.Floor(product.AverageRating ?? 0);
+                                for (int i = 0; i < stars; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                for (int i = stars; i < 5; i++)
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}
+else
+{
+    <div id="empty-cart" class="empty-cart">
+        <img src="https://www.svgrepo.com/show/17356/empty-cart.svg" alt="Empty cart" />
+        <h1 class="mb-3"><strong>Danh sách yêu thích của bạn đang trống</strong></h1>
+        <a href="/Shop/ShopIndex" class="btn-shopping">
+            <i class="fas fa-shopping-bag me-2"></i> GHÉ QUA CỬA HÀNG NGAY
+        </a>
+    </div>
+}
+

@@ -1,0 +1,14 @@
+﻿.favorite-icon {
+    position: relative; /* CẦN THIẾT */
+    display: inline-block; /* CẦN THIẾT */
+    color: #666; /* màu mặc định khi chưa yêu thích */
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+    .favorite-icon.favorited {
+        color: #e74c3c !important;
+    }
+    .favorite-icon:active {
+        transform: scale(1.2);
+    }

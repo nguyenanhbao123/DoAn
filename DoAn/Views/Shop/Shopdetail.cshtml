@@ -1,0 +1,90 @@
+﻿@model DoAn.Models.Product  
+@{  
+    ViewData["Title"] = "Chi tiết sản phẩm - " + Model.ProductName;  
+}
+<div class="product-detail"> 
+    <div class="product-image">  
+        <img src="@Model.Image" alt="@Model.ProductName" />  
+    </div>  
+ 
+    <div class="product-info">  
+        <h1 class="product-name" style="font-size:5.5rem">@Model.ProductName</h1>  
+
+        <div class="price" style="font-size:3.5rem">@Model.Price.ToString("N0") VNĐ / Kg</div>  
+
+        <!-- Form Thêm vào giỏ hàng -->
+        <form method="post" asp-controller="Cart" asp-action="AddToCart" class="add-to-cart-form">
+            <input type="hidden" name="productId" value="@Model.ProductId" />
+            <button type="submit" class="btn-add-to-cart">
+                <i class="fas fa-shopping-cart" style="font-size:1.5rem"></i> Thêm vào giỏ hàng
+            </button>
+        </form>
+
+        <!-- Form Yêu thích -->
+        <form href="#" class="add-to-favourite-form">
+            <input type="hidden" name="productId" value="@Model.ProductId" />
+            <button type="submit" class="Favourite-button">
+                <i class="fas fa-heart" style="font-size:1.5rem"></i> Yêu thích
+            </button>
+        </form>
+  
+
+        <div class="divider"></div>  
+
+        <div class="category">  
+            <div class="category-title" style="font-size:2.5rem">Phân loại sản phẩm:</div>  
+            <div class="category-tags">  
+                @if (!string.IsNullOrEmpty(Model.Category))  
+                {  
+                    foreach (var tag in Model.Category.Split(','))  
+                    {  
+                        <span class="category-tag" style="font-size:1.8rem">@tag.Trim()</span>  
+                    }  
+                }  
+                else  
+                {  
+                    <span class="category-tag" style="font-size:1.5rem">Chưa phân loại</span>  
+                }  
+            </div>  
+        </div>  
+
+        <div class="description">  
+            <h3 style="font-size:2.5rem"><i class="fas fa-info-circle" ></i> Mô tả sản phẩm</h3>  
+            <div class="description-content">  
+                <p style="font-size:1.5rem">@Model.Description</p>  
+
+                <div class="benefits">
+                    <div class="benefit" style="font-size:1.8rem">
+                        @{
+                            var category = Model.Category?.ToLower() ?? "";
+
+                            if (category.Contains("thịt") || category.Contains("cá") || category.Contains("trứng"))
+                            {
+                                <i class="fas fa-drumstick-bite"></i>  <!-- icon miếng thịt -->
+                                <div >Chăn nuôi sạch<br>Không chất tăng trưởng</div>
+                            }
+                            else if (category.Contains("sữa"))
+                            {
+                                <i class="fas fa-cheese"></i>
+                                <div>Trang trại hữu cơ<br>Không hormone tăng trưởng</div>
+                            }
+                            else
+                            {
+                                <i class="fas fa-seedling"></i>
+                                <div>Trồng hữu cơ<br>100% tự nhiên</div>
+                            }
+                        }
+                    </div>
+                    <div class="benefit" style="font-size:1.8rem">  
+                        <i class="fas fa-truck"></i>  
+                        <div>Giao hàng<br>trong ngày</div>  
+                    </div>  
+                    <div class="benefit" style="font-size:1.8rem">  
+                        <i class="fas fa-certificate"></i>  
+                        <div>Chứng nhận<br>an toàn thực phẩm</div>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+</div>

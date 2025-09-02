@@ -1,0 +1,112 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    var currentUser = await UserManager.GetUserAsync(User);
+    var isAdmin = currentUser != null && await UserManager.IsInRoleAsync(currentUser, "Admin");
+}
+
+
+<header class="header">
+
+    <a asp-controller="Home" asp-action="HomeIndex" class="logo">
+        <i class="fas fa-shopping-basket"></i> LUXDASHOP
+    </a>
+
+    <nav class="navbar">
+        <a asp-controller="Home" asp-action="HomeIndex">Trang Chủ</a>
+        <a asp-controller="Shop" asp-action="ShopIndex">Cửa Hàng</a>
+        <a asp-controller="About" asp-action="AboutIndex">Giới Thiệu</a>
+        <a asp-controller="Blog" asp-action="BlogIndex">Bài Viết</a>
+        <a asp-controller="Contact" asp-action="ContactIndex">Liên Hệ</a>
+    </nav>
+
+    <div class="icons">
+        <div id="menu-btn" class="fas fa-bars"></div>
+        <div id="search-btn" class="fas fa-search"></div>
+        <div id="cart-btn" class="fas fa-shopping-cart"></div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div id="login-btn" class="fas fa-user" data-type="account"></div>
+        }
+        else
+        {
+            <div id="login-btn" class="fas fa-user" data-type="login"></div>
+        }
+    </div>
+
+    <form action="" class="search-form">
+        <input type="search" placeholder="Tìm kiếm tại đây..." id="search-box">
+        <label for="search-box" class="fas fa-search"></label>
+    </form>
+
+    <div id="cart-popup-container">
+        @await Component.InvokeAsync("Cart")
+    </div>
+
+    <div class="login-form" data-type="login">
+        <div class="form-tabs">
+            <a href="/Identity/Account/Login" class="tab-link">
+                <i class="fas fa-sign-in-alt"></i> <span>Đăng Nhập</span>
+            </a>
+
+            <div class="divider">
+                <span>Hoặc</span>
+            </div>
+
+            <a href="/Identity/Account/Register" class="tab-link">
+                <i class="fas fa-user-plus"></i> <span>Đăng Ký</span>
+            </a>
+        </div>
+    </div>
+    @if (isAdmin)
+    {
+        <div class="login-form" data-type="account">
+            <div class="form-tabs">
+                <a href="/Identity/Account/Manage" class="tab-link">
+                    <i class="fas fa-user-cog"></i> <span>Thông Tin Cá Nhân</span>
+                </a>
+                <a asp-controller="Order" asp-action="OrderIndex" class="tab-link">
+                    <i class="fas fa-box"></i> <span>Đơn Hàng</span>
+                </a>
+                <a asp-controller="Favorite" asp-action="FavoriteIndex" class="tab-link">
+                    <i class="fas fa-users-cog"></i> <span>Danh sách yêu thích</span>
+                </a>
+                <a asp-controller="Admin" asp-action="ManageOrders" class="tab-link">
+                    <i class="fas fa-tools"></i> <span>Quản Trị</span>
+                </a>
+                <form method="post" action="/Identity/Account/Logout">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="tab-link" style="border: none; background: none; color: inherit; width: 100%; text-align: left;">
+                        <i class="fas fa-sign-out-alt"></i> <span>Đăng Xuất</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="login-form" data-type="account">
+            <div class="form-tabs">
+                <a href="/Identity/Account/Manage" class="tab-link">
+                    <i class="fas fa-user-cog"></i> <span>Thông Tin Cá Nhân</span>
+                </a>
+                <a asp-controller="Order" asp-action="OrderIndex" class="tab-link">
+                    <i class="fas fa-box"></i> <span>Đơn Hàng</span>
+                </a>
+                <a asp-controller="Favorite" asp-action="FavoriteIndex" class="tab-link">
+                    <i class="fas fa-users-cog"></i> <span>Danh sách sản phẩm yêu thích</span>
+                </a>
+                <form method="post" action="/Identity/Account/Logout">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="tab-link" style="border: none; background: none; color: inherit; width: 100%; text-align: left;">
+                        <i class="fas fa-sign-out-alt"></i> <span>Đăng Xuất</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+
+
+
+</header>

@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<IdentityUser>
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Quản lý người dùng";
+}
+<h2>Danh sách người dùng</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-action="UserDetails" asp-route-id="@user.Id" class="btn btn-sm btn-primary">Chi tiết</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

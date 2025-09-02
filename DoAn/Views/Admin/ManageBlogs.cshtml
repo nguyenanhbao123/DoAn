@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DoAn.Models.Blog>
+@{
+    ViewData["Title"] = "Quản lý bài viết";
+    Layout = "_AdminLayout";
+}
+
+<h2>Quản lý bài viết</h2>
+
+<a asp-action="BlogCreate" class="btn btn-primary mb-3">Thêm bài viết mới</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Ảnh</th>
+            <th>Ngày đăng</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var blog in Model)
+        {
+            <tr>
+                <td>@blog.Title</td>
+                <td>
+                    <img src="@blog.Image" alt="@blog.Title" style="max-height: 100px;" />
+                </td>
+                <td>@blog.PostedDate?.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-action="BlogEdit" asp-route-id="@blog.BlogId" class="btn btn-warning btn-sm">Sửa</a>
+                    <form asp-action="BlogDelete" asp-route-id="@blog.BlogId" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa bài viết này?');">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
