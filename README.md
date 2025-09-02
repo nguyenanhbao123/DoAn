@@ -1,0 +1,124 @@
+LuxDaShop - Website Bán Đồ da cao cấp
+
+LuxDaShop là website thương mại điện tử chuyên cung cấp các sản phẩm đồ da cao cấp , đảm bảo an toàn cho sức khỏe người tiêu dùng.
+
+Tính năng chính
+1. Phân quyền người dùng
+Người dùng thường (User):
+
+Xem sản phẩm, đọc blog
+Thêm sản phẩm vào giỏ hàng
+Thanh toán, tạo đơn hàng
+Quản lý thông tin cá nhân
+
+Quản trị viên (Admin):
+Quản lý sản phẩm (thêm/sửa/xóa)
+Quản lý người dùng
+Quản lý đơn hàng
+Quản lý bài viết/blog
+
+2. Chức năng sản phẩm
+Hiển thị danh sách sản phẩm theo danh mục
+Tìm kiếm và lọc sản phẩm
+Xem chi tiết sản phẩm (hình ảnh, mô tả, đánh giá)
+Thêm sản phẩm vào giỏ hàng
+3. Giỏ hàng & Thanh toán
+Thêm/xóa/sửa số lượng sản phẩm trong giỏ
+Tính toán tổng tiền tự động
+Đặt hàng và thanh toán
+Lưu lịch sử đơn hàng
+Hủy đơn hàng (khi trạng thái "Chưa xác nhận")
+4. Quản lý người dùng
+Đăng ký tài khoản mới
+Đăng nhập/Đăng xuất
+Quên mật khẩu
+Cập nhật thông tin cá nhân
+Quản lý địa chỉ giao hàng
+5. Blog & Bài viết
+Hiển thị danh sách bài viết
+Xem chi tiết bài viết
+Phân loại bài viết theo chủ đề
+Bình luận bài viết
+6. Trang liên hệ
+Form liên hệ với cửa hàng
+Thông tin địa chỉ, số điện thoại
+Bản đồ chỉ dẫn
+7. Admin Dashboard
+Quản lý sản phẩm:
+Thêm/sửa/xóa sản phẩm
+Quản lý danh mục sản phẩm
+Quản lý kho hàng
+
+Quản lý đơn hàng:
+Xem danh sách đơn hàng
+Cập nhật trạng thái đơn hàng
+Hủy đơn hàng
+
+Quản lý người dùng:
+Xem danh sách người dùng
+Khóa/mở tài khoản
+
+Quản lý nội dung:
+Tạo/sửa/xóa bài viết blog
+Quản lý bình luận
+
+Công nghệ sử dụng
+Frontend: HTML5, CSS3, JavaScript, Bootstrap 5
+Backend: ASP.NET Core MVC
+Cơ sở dữ liệu: SQL Server
+Xác thực: ASP.NET Core Identity
+Payment: Tích hợp cổng thanh toán (đang phát triển)
+Hướng phát triển trong tương lai
+Hệ thống yêu thích
+
+Thêm sản phẩm vào danh sách yêu thích
+Thêm bài viết vào mục đã lưu
+Nhận thông báo khi sản phẩm yêu thích giảm giá
+Đánh giá nâng cao
+
+Cho phép đăng đánh giá kèm hình ảnh
+Hệ thống xác minh mua hàng trước khi đánh giá
+Tương tác giữa người bán và người đánh giá
+Hệ thống gợi ý thông minh
+
+Gợi ý sản phẩm dựa trên lịch sử mua hàng
+"Sản phẩm thường mua cùng"
+"Khách hàng mua sản phẩm này cũng mua"
+"Tìm kiếm sản phẩm"
+Tích hợp thanh toán trực tuyến
+
+Cổng thanh toán VNPay, MoMo
+Thanh toán qua thẻ tín dụng
+Tích hợp mạng xã hội
+
+Đăng nhập bằng Facebook/Google
+Chia sẻ sản phẩm lên mạng xã hội
+Hiển thị đánh giá từ Facebook
+Chương trình khách hàng thân thiết
+
+Tích điểm khi mua hàng
+Đổi điểm lấy voucher
+Hạng thành viên (Vàng, Bạch kim)
+Hỗ trợ khách hàng
+
+Chat trực tuyến với nhân viên
+Hệ thống ticket hỗ trợ
+Câu hỏi thường gặp (FAQ)
+Tính năng đa ngôn ngữ
+
+Hỗ trợ tiếng Anh, tiếng Việt
+Tùy chọn chuyển đổi ngôn ngữ
+Cài đặt và chạy dự án
+Yêu cầu hệ thống
+.NET 6.0 SDK
+SQL Server 2019+
+Visual Studio 2022 (khuyến nghị)
+Các bước cài đặt
+Clone repository:
+git clone : https://github.com/nguyenanhbao123/DoAn.git
+
+Vào appsetting json thay đổi mã chuỗi kết nối CSDL
+
+Cập nhật cơ sở dữ liệu trong package manager console:
+ database-update
+Chạy ứng dụng
